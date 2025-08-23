@@ -1,0 +1,28 @@
+{
+  "name": "TestNew",
+  "displayName": "TestNew",
+  "plugins": [
+    "expo-mail-composer",
+    "expo-secure-store",
+    "@react-native-firebase/app",
+    "@react-native-firebase/messaging",
+    [
+      "expo-build-properties",
+      {
+        "ios": {
+          "useFrameworks": "static"
+        }
+      }
+    ]
+  ],
+  "expo": {
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.mycorp.myapp"
+    },
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.mycorp.myapp"
+    }
+  }
+}
