@@ -4,42 +4,37 @@
  *
  * @format
  */
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import React, { useCallback, useRef } from 'react';
-import type { PropsWithChildren } from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
+import React, {useCallback, useRef} from 'react';
+import type {PropsWithChildren} from 'react';
+import {Button, StyleSheet, Text, useColorScheme, View} from 'react-native';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   BottomSheetModal,
   BottomSheetView,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import {LinearGradient} from 'expo-linear-gradient';
+import {ColorCard} from './components/ColorCard';
+import {GradientCard} from './components/GradientCard';
+import { HalfCircleProgress } from './components/HalfCircleProgress';
 
 const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
 
 const Stack = createNativeStackNavigator({
-  screens: {
-  },
+  screens: {},
 });
 
-
 function MyTabs() {
-
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -52,25 +47,44 @@ function MyTabs() {
   }, []);
 
   return (
-    <Tab.Navigator initialRouteName='Home'>
-      <Tab.Screen name="Home" component={() => <View>          <Button
-        onPress={handlePresentModalPress}
-        title="Present Modal"
-        color="black"
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen
+        name="Home"
+        component={() => (
+          <View>
+            <Button
+              onPress={handlePresentModalPress}
+              title="Present Modal"
+              color="black"
+            />
+            <BottomSheetModal
+              ref={bottomSheetModalRef}
+              onChange={handleSheetChanges}>
+              <BottomSheetView
+                style={{
+                  flex: 1,
+                  padding: 24,
+                  justifyContent: 'center',
+                  backgroundColor: 'grey',
+                }}>
+                <Text>Awesome 🎉</Text>
+              </BottomSheetView>
+            </BottomSheetModal>
+          </View>
+        )}
       />
-        <BottomSheetModal
-          ref={bottomSheetModalRef}
-          onChange={handleSheetChanges}
-        >
-          <BottomSheetView style={{
-            flex: 1, padding: 24,
-            justifyContent: 'center',
-            backgroundColor: 'grey',
-          }}>
-            <Text>Awesome 🎉</Text>
-          </BottomSheetView>
-        </BottomSheetModal></View>} />
-      <Tab.Screen name="Profile" component={() => <View></View>} />
+      <Tab.Screen
+        name="Profile"
+        component={() => (
+          <ScrollView>
+            <View style={{gap: 8}}>
+              <ColorCard />
+              <GradientCard />
+              <HalfCircleProgress percentage={10} />
+            </View>
+          </ScrollView>
+        )}
+      />
     </Tab.Navigator>
   );
 }
@@ -82,7 +96,12 @@ function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
-        <View style={{ flex: 1, paddingTop: safePadding, paddingBottom: safePadding }}>
+        <View
+          style={{
+            flex: 1,
+            paddingTop: safePadding,
+            paddingBottom: safePadding,
+          }}>
           <NavigationContainer ref={navigationRef}>
             <Drawer.Navigator initialRouteName="BottomNavigation">
               <Drawer.Screen name="BottomNavigation" component={MyTabs} />

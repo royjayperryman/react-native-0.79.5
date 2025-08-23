@@ -69,7 +69,8 @@
     "react-native-view-shot": "^4.0.3",
     "react-native-webview": "13.13.5",
     "tealium-react-native": "^2.6.1",
-    "tealium-react-native-adobe-visitor": "^1.2.0"
+    "tealium-react-native-adobe-visitor": "^1.2.0",
+    "expo-linear-gradient": "~14.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
