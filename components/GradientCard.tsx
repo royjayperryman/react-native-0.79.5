@@ -27,8 +27,6 @@ export function GradientCard() {
         <View style={{padding: 16}}>
           <Text>My Title</Text>
 
-          <HalfCircleProgress percentage={10}/>
-
           <Text>3,542/10,000</Text>
 
           <Button color="rgba(26, 5, 47, 1)">Test</Button>
