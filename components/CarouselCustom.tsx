@@ -29,14 +29,14 @@ export default function VerticalPagingCard({
   const listRef = useRef<FlatList>(null);
 
   // auto paginate every 3s
-  useEffect(() => {
-    const timer = setInterval(() => {
-      let nextIndex = (currentIndex + 1) % data.length;
-      listRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-      setCurrentIndex(nextIndex);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, [currentIndex, data.length]);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     let nextIndex = (currentIndex + 1) % data.length;
+  //     listRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+  //     setCurrentIndex(nextIndex);
+  //   }, 5000);
+  //   return () => clearInterval(timer);
+  // }, [currentIndex, data.length]);
 
   // inside useAnimatedScrollHandler
   const onScroll = useAnimatedScrollHandler({
@@ -47,7 +47,7 @@ export default function VerticalPagingCard({
       }
     },
   });
-  
+
   const renderItem = ({ item }: { item: { title: string; value: string } }) => (
     <View style={[styles.page, { height: cardHeight, width: cardWidth }]}>
       <Text style={styles.metricTitle}>{item.title}</Text>

@@ -4,10 +4,9 @@
  *
  * @format
  */
-import { FlatList, GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import React, { useCallback, useRef } from 'react';
-import type { PropsWithChildren } from 'react';
-import { Button, Dimensions, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Button, Dimensions, StyleSheet, View } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
@@ -19,17 +18,18 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
   BottomSheetModal,
-  BottomSheetView,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import { LinearGradient } from 'expo-linear-gradient';
 import { ColorCard } from './components/ColorCard';
 import { GradientCard } from './components/GradientCard';
-import { HalfCircleProgress } from './components/HalfCircleProgress';
-import CarouselCustom from './components/CarouselCustom';
 import VerticalPagingCard from './components/CarouselCustom';
 import MyTestSheet from './components/MyTestSheet';
 import ZillowMapScreen from './components/MapsScreen';
+import RainbowProgress from './components/Test';
+import SegmentedTracker from './components/SegmentedTracker';
+import CurvedNextSegmentTracker from './components/CurvedNextSegmentTracker';
+import { useTheme } from 'react-native-paper';
+import TwoSegmentBar from './components/TwoSegmentBar';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +49,8 @@ function HomeStack() {
   const navigation = useNavigation();
   return (<Stack.Navigator initialRouteName='Test'>
     <Stack.Screen name={'Test'} component={() => <View>
+
+      <RainbowProgress currentProgress={9000} maxProgress={10000} />
       <Button title="Open Test Sheet" onPress={() => navigation.navigate('MyTestSheet')} /></View>} />
   </Stack.Navigator>)
 }
@@ -65,6 +67,8 @@ function MyTabs() {
     console.log('handleSheetChanges', index);
   }, []);
 
+  const theme = useTheme();
+
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Tab.Screen
@@ -75,10 +79,15 @@ function MyTabs() {
         name="Profile"
         options={{ headerShown: false }}
         component={() => (
-          <ScrollView>
+          <ScrollView style={{ backgroundColor: theme.colors.background }}>
             <View style={{ gap: 8 }}>
               <ColorCard />
               <GradientCard />
+              <View style={{ margin: 16, gap: 16 }}>
+                <SegmentedTracker maxSegments={10} currentValue={3} />
+                <CurvedNextSegmentTracker maxSegments={10} currentValue={10} />
+                <TwoSegmentBar min={150} max={200} />
+              </View>
               <View style={{ flexDirection: 'row' }}>
                 <View style={styles.cardContainer}>
                   <VerticalPagingCard cardWidth={CARD_WIDTH} cardHeight={CARD_HEIGHT} />
